@@ -1,4 +1,4 @@
-@(title: String)(navbar: Html)(content: Html)
+@(title: String, nav: String = "")(content: Html)
 
 <!DOCTYPE html>
 <html lang="@lang.code">
@@ -37,7 +37,19 @@
       <div class="navbar-inner">
         <div class="container-fluid">
 
-          @navbar
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">Gambol</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
 
         </div>
       </div>
