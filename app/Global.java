@@ -1,6 +1,4 @@
-import java.util.Arrays;
-
-import models.SecurityRole;
+import com.avaje.ebean.Ebean;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.PlayAuthenticate.Resolver;
@@ -8,10 +6,14 @@ import com.feth.play.module.pa.exceptions.AccessDeniedException;
 import com.feth.play.module.pa.exceptions.AuthException;
 
 import controllers.routes;
+import java.util.List;
+import java.util.Map;
+import models.User;
 
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import play.libs.Yaml;
 import play.mvc.Call;
 
 
@@ -87,7 +89,7 @@ public class Global extends GlobalSettings {
 
 
 	private void initialData() {
-		if (SecurityRole.find.findRowCount() == 0) {
+/*		if (SecurityRole.find.findRowCount() == 0) {
 			for (final String roleName : Arrays
 					.asList(controllers.Application.USER_ROLE)) {
 				final SecurityRole role = new SecurityRole();
@@ -95,6 +97,12 @@ public class Global extends GlobalSettings {
 				role.save();
 			}
 		}
-	}
+*/
+        if (User.find.findRowCount() == 0) {
+            Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml.load("user-data.yml");
 
+            Ebean.save(all.get("securityRoles"));
+            Ebean.save(all.get("users"));
+        }
+    }
 }
