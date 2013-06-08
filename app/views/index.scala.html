@@ -1,9 +1,30 @@
 @(message: String)
 
+@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.core.utils.TemplateUtils._
+
 @main("Welcome to Gambol") {
-    <div class="hero-unit">
-        <h1>@message</h1>
-        <p>Use this document as a way to quick start any new project.<br>
-            All you get is this message and a barebones HTML document.</p>
-    </div>
+
+    @subjectPresentOr() {
+      <div class="hero-unit">
+      @defining(Application.getLocalUser(session())) { user =>
+          @user.teams.map { tp =>
+              <dl>
+                  <dt><a href="@routes.Application.teamIndex(tp.team.club.slug, tp.team.slug)">@tp.team.club.name | @tp.team.name</a></dt>
+                  <dd>
+                  @tp.team.events.map { evt =>
+                      <p>@evt</p>
+                  }
+                  </dd>
+              </dl>
+              }
+          }
+      </div>
+      }{
+      <div class="hero-unit">
+          <h1>@message</h1>
+          <p>Use this document as a way to quick start any new project.<br>
+              All you get is this message and a barebones HTML document.</p>
+      </div>
+      }
 }

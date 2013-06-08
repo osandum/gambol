@@ -99,10 +99,15 @@ public class Global extends GlobalSettings {
 		}
 */
         if (User.find.findRowCount() == 0) {
-            Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml.load("user-data.yml");
+            Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml.load("initial-data.yml");
 
             Ebean.save(all.get("securityRoles"));
+
+            Ebean.save(all.get("clubs"));
+            Ebean.save(all.get("teams"));
+
             Ebean.save(all.get("users"));
+            Ebean.save(all.get("players"));
         }
     }
 }

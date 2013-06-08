@@ -70,6 +70,9 @@ public class User extends Model implements Subject {
 	@ManyToMany
 	public List<UserPermission> permissions;
 
+    @OneToMany(mappedBy="player")
+    public List<TeamPlayer> teams;
+
 	public static final Finder<Long, User> find = new Finder<Long, User>(
 			Long.class, User.class);
 

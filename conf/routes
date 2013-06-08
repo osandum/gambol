@@ -7,6 +7,9 @@ GET     /                           controllers.Application.index
 GET     /restricted                 controllers.Application.restricted
 GET     /assets/javascript/routes.js    controllers.Application.jsRoutes
 
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
 GET     /profile                    controllers.Application.profile
 
 GET     /login                      controllers.Application.login
@@ -40,8 +43,11 @@ POST    /accounts/link              controllers.Account.doLink
 GET     /accounts/merge             controllers.Account.askMerge
 POST    /accounts/merge             controllers.Account.doMerge
 
-GET     /login/password/forgot     controllers.Signup.forgotPassword(email: String ?= "")
-POST    /login/password/forgot     controllers.Signup.doForgotPassword
+GET     /login/password/forgot      controllers.Signup.forgotPassword(email: String ?= "")
+POST    /login/password/forgot      controllers.Signup.doForgotPassword
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+# Home page
+GET     /:club                      controllers.Application.clubIndex(club: String)
+
+# Home page
+GET     /:club/:team                controllers.Application.teamIndex(club: String, team: String)

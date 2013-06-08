@@ -1,0 +1,87 @@
+@(team: models.Team)
+
+@main(team.name + " | " + team.club.name) {
+
+<div class="row-fluid">
+
+    <!-- Main Feed -->
+   <!-- This has been source ordered to come first in the markup (and on small devices) but to be to the right of the nav on larger screens -->
+   <div class="span8">
+
+       <div id="feed">feed...</div>
+
+   </div>
+
+    <!-- Right Sidebar -->
+    <!-- On small devices this column is hidden -->
+    <aside class="span4">
+      <p><img src="http://placehold.it/300x440&text=[ad]" /></p>
+      <p><img src="http://placehold.it/300x440&text=[ad]" /></p>
+    </aside>
+
+</div>
+
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="http://stevenlevithan.com/assets/misc/date.format.js"></script>
+
+<script type="text/javascript">
+    google.load("feeds", "1");
+
+    google.setOnLoadCallback(function () {
+      new google.feeds.Feed("@(team.rssFeed)").load(function(result) {
+        if (!result.error) {
+          var container = $("<div>");
+
+          for (var i = 0; i < result.feed.entries.length; i++) {
+
+            if (i > 0)
+                container.append("<hr/>");
+            var entry = result.feed.entries[i];
+
+            var pubDate = new Date(entry.publishedDate);
+
+            var row = $("<div />", { class: "row"});
+
+            row.append($('<div class="span2"><img src="http://placehold.it/80x80&text=[img]" /></div>'));
+
+            var c = $('<blockquote class="span10"></blockquote>');
+
+            var h = $("<h4>" + entry.title + "</h4>");
+
+            c.append(h);
+            c.append("<cite>" + entry.author + ", " + pubDate.format('yyyy-mm-dd') + "</cite>")
+            c.append(entry.content);
+
+            row.append(c);
+
+
+            container.append(row);
+          }
+          $("#feed").replaceWith(container);
+        }
+      });
+    });
+
+
+    function initialize() {
+      var feed = new google.feeds.Feed("@(team.rssFeed)");
+      feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+
+            var div = document.createElement("div");
+            div.setAttribute("class", "row")
+            div.appendChild(document.createTextNode(entry.title));
+            container.appendChild(div);
+          }
+        }
+      });
+    }
+//  google.setOnLoadCallback(initialize);
+
+</script>
+
+}
