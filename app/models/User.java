@@ -27,7 +27,7 @@ import java.util.*;
 @Table(name = "users")
 public class User extends Model implements Subject {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -41,15 +41,23 @@ public class User extends Model implements Subject {
 	public String email;
 
 	public String name;
-	
+
 	public String firstName;
-	
+
 	public String lastName;
 
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	@Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date lastLogin;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
+	@Formats.DateTime(pattern = "yyyy-MM-dd")
+	public Date dateOfBirth;
+
 	public boolean active;
+
+    @ManyToOne
+    public User contact;
 
 	public boolean emailValidated;
 
@@ -159,7 +167,7 @@ public class User extends Model implements Subject {
 				user.name = name;
 			}
 		}
-		
+
 		if (authUser instanceof FirstLastNameIdentity) {
 		  final FirstLastNameIdentity identity = (FirstLastNameIdentity) authUser;
 		  final String firstName = identity.getFirstName();
