@@ -1,0 +1,10 @@
+@(verificationUrl: String, token: String, name: String, email: String)Hey @name,
+
+
+Du har lige oprettet en profil på Gambol.
+
+Følg linket her for at aktivere din profil nu:
+@verificationUrl
+
+Velkommen,
+Gambol.dk

@@ -74,6 +74,7 @@
                 @subjectNotPresent() {
 			    	<li class="@("active".when(nav == "signup"))"><a href="@routes.Application.signup()">@Messages("playauthenticate.navigation.signup")</a></li>
 			    }
+              <li class="@("active".when(nav == ""))"><a href="@routes.Application.index()">@Messages("playauthenticate.navigation.home")</a></li>
             </ul>
           </div>
 
@@ -83,7 +84,7 @@
 
     <div class="container-fluid">
       @content
- 
+
       <hr>
 
       <footer>
