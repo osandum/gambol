@@ -15,7 +15,7 @@
       @defining(Application.getLocalUser(session())) { user =>
           @user.teams.map { tp =>
               <dl>
-                  <dt><a href="@routes.Application.teamIndex(tp.team.club.slug, tp.team.slug)">@tp.team.club.name | @tp.team.name</a></dt>
+                  <dt><a href="@routes.Application.teamIndex(tp.team.parent.slug, tp.team.slug)">@tp.team.parent.name | @tp.team.name</a></dt>
                   <dd>
                   @tp.team.events.map { evt =>
                       <p>@evt</p>

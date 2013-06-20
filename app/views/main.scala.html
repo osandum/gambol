@@ -75,7 +75,7 @@
               <li class="@("active".when(nav == "team"))">
          @subjectPresentOr() {
           	@defining(Application.getLocalUser(session())) { user =>
-                  <a href="@routes.Application.teamIndex(user.defaultTeam.club.slug, user.defaultTeam.slug)">@Messages("gambol.navigation.team")</a>
+                  <a href="@routes.Application.teamIndex(user.defaultTeam.parent.slug, user.defaultTeam.slug)">@Messages("gambol.navigation.team")</a>
                   }
              }{
                   <a href="@routes.Application.teamSearch()">@Messages("gambol.navigation.team")</a>

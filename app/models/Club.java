@@ -14,32 +14,11 @@ import play.data.validation.Constraints;
  * @version     $Id: Club.java -1 11-05-2013 17:44:47 osa $
  */
 @Entity
-public class Club extends Model {
-
-  @Id
-  @Constraints.Min(10)
-  public Long id;
-
-  @Column(unique = true)
-  @Constraints.Required
-  public String name;
-
-  @Column(unique = true)
-  @Constraints.Required
-  @Constraints.Pattern("[a-z0-9]+")
-  public String slug;
+@DiscriminatorValue("club")
+public class Club extends OrgUnit {
 
   @ManyToMany(mappedBy="clubs")
   public Set<Event> events;
-
-  @OneToMany(mappedBy="club")
-  public List<Team> teams;
-
-  @ManyToOne
-  public User createdBy;
-
-  @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-  public Date created;
 
   public static Model.Finder<Long, Club> find = new Model.Finder(Long.class, Club.class);
 

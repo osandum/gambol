@@ -15,24 +15,8 @@ import java.net.URI;
  * @version     $Id: Team.java -1 11-05-2013 18:19:43 osa $
  */
 @Entity
-public class Team extends Model {
-
-  @Id
-  public Long id;
-
-  @ManyToOne
-  public Club club;
-
-  @Constraints.Required
-  public String name;
-
-  public URI rssFeed;
-
-  public String calendarId;
-
-  @Constraints.Required
-  @Constraints.Pattern("[a-z0-9]+")
-  public String slug;
+@DiscriminatorValue("team")
+public class Team extends OrgUnit {
 
   @OneToMany(mappedBy="team")
   public List<TeamPlayer> players;
@@ -44,7 +28,7 @@ public class Team extends Model {
 
   public static Team findBySlug(Club club, String slug) {
     return find.where()
-            .eq("club", club)
+            .eq("parent", club)
             .eq("slug", slug)
             .findUnique();
   }
@@ -52,7 +36,7 @@ public class Team extends Model {
 
     @Override
     public String toString() {
-        return "Team{" + "id=" + id + ", club=" + club + ", name=" + name + ", slug=" + slug + '}';
+        return "Team{" + "id=" + id + ", parent=" + parent + ", name=" + name + ", slug=" + slug + '}';
     }
 
 }
