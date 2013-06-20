@@ -1,0 +1,22 @@
+@(club: models.Club)
+
+@import play.i18n._
+
+@main(club.name) {
+    <div class="row">
+        <div class="span8">
+
+        <h1>@club.name</h1>
+
+        </div>
+
+        <div class="span4">
+        <small>
+            @Messages.get("gambol.created.summary", club.created, club.createdBy.name)
+        </small>
+
+
+        </div>
+
+    </div>
+}

@@ -1,0 +1,33 @@
+@(message: String, clubForm: Form[Club])
+
+@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.core.utils.TemplateUtils._
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Welcome to Gambol") {
+    @helper.form(action = routes.ClubController.createClub()) {
+        <fieldset>
+            <legend>Ny klub</legend>
+
+            @inputText(
+                clubForm("name"),
+                args = 'class -> "input-xlarge",
+                '_label -> "Klubnavn",
+                '_help -> "Vælg et gyldigt klubnavn.",
+                '_error -> clubForm.globalError
+            )
+
+            @inputText(
+                clubForm("slug"),
+                args = 'class -> "input-small",
+                '_label -> "Kort navn",
+                '_help -> "Vælg et gyldigt kort navn.",
+                '_error -> clubForm.globalError
+            )
+        </fieldset>
+
+        <button type="submit">Opret</button>
+    }
+}

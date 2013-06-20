@@ -1,7 +1,12 @@
-@(message: String)
+@(message: String, teamForm: Form[Team])
 
 @import be.objectify.deadbolt.java.views.html._
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@import play.i18n._
 
 @main("Welcome to Gambol") {
 
@@ -27,4 +32,17 @@
               All you get is this message and a barebones HTML document.</p>
       </div>
       }
+    <div class="row-fluid">
+        <div class="span4">
+           <p><img src="http://placehold.it/300x440&text=[ad]" /></p>
+        </div>
+        <div class="span4">
+           <p><img src="http://placehold.it/300x440&text=[ad]" /></p>
+        </div>
+        <div class="span4">
+            <h2>Opret dit hold</h2>
+            <p>Opret dit hold og inviter dine holdkammerater med det samme.</p>
+            <p><a class="btn btn-large btn-primary" href="@routes.ClubController.newClub"><i class="icon-plus-sign"></i>@Messages.get("gambol.club.new")</a></p>
+        </div>
+    </div>
 }

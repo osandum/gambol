@@ -21,6 +21,7 @@ import be.objectify.deadbolt.java.actions.Restrict;
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
+import java.util.List;
 
 public class Application extends Controller {
 
@@ -29,7 +30,7 @@ public class Application extends Controller {
 	public static final String USER_ROLE = "user";
 
 	public static Result index() {
-		return ok(index.render("Your new application is ready."));
+		return ok(index.render("Your new application is ready.", TeamController.teamForm));
 	}
 
 	public static User getLocalUser(final Session session) {
@@ -101,7 +102,7 @@ public class Application extends Controller {
         Club c = Club.findBySlug(clubSlug);
         if (c == null)
             return notFound(clubSlug);
-        return ok(club.render(c));
+        return ok(views.html.club.summary.render(c));
     }
 
     public static Result teamIndex(String clubSlug, String teamSlug) {
@@ -112,7 +113,7 @@ public class Application extends Controller {
         if (t == null)
             return notFound(teamSlug);
 
-        return ok(team.render(t));
+        return ok(views.html.team.summary.render(t));
         /*
          F.Promise<play.mvc.Result> promise =
          WS.url(String.valueOf(t.rssFeed)).get().map(
@@ -125,5 +126,19 @@ public class Application extends Controller {
 
          return async(promise);
          */
+    }
+
+    public static Result teamSearch() {
+        return notFound("Not yet implemented");
+    }
+
+	@Restrict(@Group(Application.USER_ROLE))
+    public static Result myTeamIndex() {
+		final User localUser = getLocalUser(session());
+
+        for (TeamPlayer tp : localUser.teams)
+            return ok(views.html.team.summary.render(tp.team));
+
+        return notFound();
     }
 }

@@ -9,28 +9,32 @@ import be.objectify.deadbolt.core.models.Subject;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.user.AuthUserIdentity;
+import play.Logger;
 
 public class MyDeadboltHandler extends AbstractDeadboltHandler {
 
 	@Override
 	public Result beforeAuthCheck(final Http.Context context) {
 		if (PlayAuthenticate.isLoggedIn(context.session())) {
+            Logger.info("(logged in)");
 			// user is logged in
 			return null;
-		} else {
-			// user is not logged in
-
-			// call this if you want to redirect your visitor to the page that
-			// was requested before sending him to the login page
-			// if you don't call this, the user will get redirected to the page
-			// defined by your resolver
-			final String originalUrl = PlayAuthenticate
-					.storeOriginalUrl(context);
-
-			context.flash().put("error",
-					"You need to log in first, to view '" + originalUrl + "'");
-			return redirect(PlayAuthenticate.getResolver().login());
 		}
+
+        // user is not logged in
+        Logger.info("(not logged in)");
+
+        // call this if you want to redirect your visitor to the page that
+        // was requested before sending him to the login page
+        // if you don't call this, the user will get redirected to the page
+        // defined by your resolver
+        final String originalUrl = PlayAuthenticate.storeOriginalUrl(context);
+        Logger.info("storing " + originalUrl);
+
+        context.flash().put("error",
+                "You need to log in first, to view '" + originalUrl + "'");
+
+        return redirect(PlayAuthenticate.getResolver().login());
 	}
 
 	@Override

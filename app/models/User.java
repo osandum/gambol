@@ -12,6 +12,7 @@ import com.feth.play.module.pa.user.AuthUserIdentity;
 import com.feth.play.module.pa.user.EmailIdentity;
 import com.feth.play.module.pa.user.NameIdentity;
 import com.feth.play.module.pa.user.FirstLastNameIdentity;
+import com.feth.play.module.pa.user.PicturedIdentity;
 import models.TokenAction.Type;
 import play.data.format.Formats;
 import play.db.ebean.Model;
@@ -56,6 +57,8 @@ public class User extends Model implements Subject {
 
 	public boolean active;
 
+    public String pictureUrl;
+
     @ManyToOne
     public User contact;
 
@@ -75,6 +78,12 @@ public class User extends Model implements Subject {
 
 	public static final Finder<Long, User> find = new Finder<Long, User>(
 			Long.class, User.class);
+
+    public Team defaultTeam() {
+        for (TeamPlayer tp : teams)
+            return tp.team;
+        return null;
+    }
 
 	@Override
 	public String getIdentifier()
@@ -180,6 +189,14 @@ public class User extends Model implements Subject {
 		  }
 		  if (lastName != null) {
 		    user.lastName = lastName;
+		  }
+		}
+
+		if (authUser instanceof PicturedIdentity) {
+		  final PicturedIdentity identity = (PicturedIdentity) authUser;
+		  final String pic = identity.getPicture();
+		  if (pic != null) {
+		    user.pictureUrl = pic;
 		  }
 		}
 

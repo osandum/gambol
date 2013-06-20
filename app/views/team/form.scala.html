@@ -1,0 +1,39 @@
+@(message: String, teamForm: Form[Team], clubs: Seq[(String, String)])
+
+@import be.objectify.deadbolt.java.views.html._
+@import be.objectify.deadbolt.core.utils.TemplateUtils._
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Welcome to Gambol") {
+    @helper.form(action = routes.TeamController.createTeam()) {
+        <fieldset>
+            <legend>Nyt hold</legend>
+
+            @select(
+                teamForm("club"),
+                clubs,
+                '_label -> "Club",
+                '_default -> "-- Choose a club --",
+                '_showConstraints -> false
+            )
+
+            @inputText(
+                teamForm("name"),
+                '_label -> "Teamname",
+                '_help -> "Please choose a valid teamname.",
+                '_error -> teamForm.globalError
+            )
+
+            @inputText(
+                teamForm("slug"),
+                '_label -> "URL Slug",
+                '_help -> "Please choose a valid URL slug.",
+                '_error -> teamForm.globalError
+            )
+        </fieldset>
+
+        <button type="submit">Opret</button>
+    }
+}

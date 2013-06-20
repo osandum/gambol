@@ -111,6 +111,12 @@ playauthenticate.token.error.message=The given token has either expired or does 
 playauthenticate.user.exists.title=User exists
 playauthenticate.user.exists.message=This user already exists.
 
+gambol.navigation.team=Mit hold
+
+gambol.created.summary=Oprettet {0} af {1}
+
+gambol.club.new=Ny klub
+
 # play-authenticate: Navigation
 playauthenticate.navigation.profile=Profile
 playauthenticate.navigation.link_more=Link more providers
