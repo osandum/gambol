@@ -1,0 +1,57 @@
+
+@scripts = {
+    <script src="@routes.Assets.at("vendor/fullcalendar-1.6.1/fullcalendar.js")"></script>
+    <script src="@routes.Assets.at("vendor/fullcalendar-1.6.1/gcal.js")"></script>
+
+    <script>
+
+        $(document).ready(function() {
+
+            $('#calendar').fullCalendar({
+                firstDay: 1,
+
+                // KSF U11
+                events: 'http://www.google.com/calendar/feeds/pnumj9f5ce9774nhjq48so2uo0%40group.calendar.google.com/public/basic',
+
+                eventClick: function(event) {
+                    // opens events in a popup window
+                    window.open(event.url, 'gcalevent', 'width=700,height=600');
+                    return false;
+                },
+
+                loading: function(bool) {
+                    if (bool) {
+                        $('#loading').show();
+                    }else{
+                        $('#loading').hide();
+                    }
+                },
+
+                monthNames: [ "januar","februar","marts","april","maj","juni","juli", "august", "september", "oktober", "november", "december" ],
+                monthNamesShort: [ "jan","feb","mar","apr","maj","jun","jul", "aug", "sep", "okt", "nov", "dec" ],
+
+                dayNames: [ 'søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
+                dayNamesShort: [ 'søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør' ],
+
+                timeFormat: {
+                  agenda: 'HH(:mm){–HH(:mm)}',
+                  '': 'HH(:mm){–HH(:mm) }'
+                 }
+            });
+
+        });
+
+    </script>
+
+}
+
+@main("Welcome to Gambol", scripts = scripts) {
+
+    <link media="screen" href="@routes.Assets.at("vendor/fullcalendar-1.6.1/fullcalendar.css")" rel="stylesheet" />
+    <link media="print" href="@routes.Assets.at("vendor/fullcalendar-1.6.1/fullcalendar.print.css")" rel="stylesheet" />
+
+    <div>TODO write content</div>
+    <div id="loading" style="display:none">loading...</div>
+    <div id="calendar"></div>
+
+}
