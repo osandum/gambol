@@ -8,6 +8,7 @@ import com.feth.play.module.pa.exceptions.AuthException;
 import controllers.routes;
 import java.util.List;
 import java.util.Map;
+import models.OrgUnit;
 import models.User;
 
 import play.Application;
@@ -108,6 +109,17 @@ public class Global extends GlobalSettings {
 
             Ebean.save(all.get("users"));
             Ebean.save(all.get("players"));
+
+            Ebean.save(all.get("events"));
+
+//            for (Object close: all.get("users")) {
+//                Ebean.saveManyToManyAssociations(close, "friends");
         }
+
+        for (OrgUnit u : OrgUnit.find.all()) {
+            u.path = OrgUnit.getPath(u);
+            u.save();
+        }
+
     }
 }

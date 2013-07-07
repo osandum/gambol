@@ -10,6 +10,7 @@ import play.data.Form;
 import play.mvc.*;
 import play.mvc.Http.Response;
 import play.mvc.Http.Session;
+import play.libs.Json;
 import providers.MyUsernamePasswordAuthProvider;
 import providers.MyUsernamePasswordAuthProvider.MyLogin;
 import providers.MyUsernamePasswordAuthProvider.MySignup;
@@ -21,7 +22,7 @@ import be.objectify.deadbolt.java.actions.Restrict;
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
-import java.util.List;
+import java.util.*;
 
 public class Application extends Controller {
 
@@ -49,6 +50,16 @@ public class Application extends Controller {
 	public static Result profile() {
 		final User localUser = getLocalUser(session());
 		return ok(profile.render(localUser));
+	}
+
+	@Restrict(@Group(Application.USER_ROLE))
+	public static Result events() {
+		final User localUser = getLocalUser(session());
+        Set<Event> res = new HashSet<Event>();
+        for (TeamPlayer tp : localUser.teams)
+            res.addAll(tp.team.events);
+
+		return ok(Json.toJson(res.toArray()));
 	}
 
 	public static Result login() {

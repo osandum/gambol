@@ -17,9 +17,6 @@ import play.data.validation.Constraints;
 @DiscriminatorValue("club")
 public class Club extends OrgUnit {
 
-  @ManyToMany(mappedBy="clubs")
-  public Set<Event> events;
-
   public static Model.Finder<Long, Club> find = new Model.Finder(Long.class, Club.class);
 
   public static Club findBySlug(String slug) {

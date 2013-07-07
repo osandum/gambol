@@ -3,12 +3,14 @@ package models;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.Set;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import play.data.validation.Constraints;
@@ -36,6 +38,9 @@ public abstract class OrgUnit extends Model {
 
     public String calendarId;
 
+    @ManyToMany//(mappedBy = "parties")
+    public Set<Event> events;
+
     @Constraints.Required
     @Constraints.Pattern("[a-z0-9]+")
     @Constraints.MaxLength(10)
@@ -50,6 +55,15 @@ public abstract class OrgUnit extends Model {
     public Date created;
 
     public static Finder<Long, OrgUnit> find = new Finder(Long.class, OrgUnit.class);
+
+
+    public void collectEvents(Set<Event> all) {
+    //    if (parent != null)
+    //      parent.collectEvents(all);
+
+        for (Event evt : events)
+            all.add(evt);
+    }
 
     public static String getPath(OrgUnit u) {
         if (u.parent == null)

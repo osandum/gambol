@@ -50,7 +50,7 @@
             var h = $("<h4>" + entry.title + "</h4>");
 
             c.append(h);
-            c.append("<cite>" + entry.author + ", " + pubDate.format('yyyy-mm-dd') + "</cite>")
+            c.append("<cite><i class=icon-user></i> " + entry.author + ", <i class=icon-calendar></i> " + pubDate.format('yyyy-mm-dd') + "</cite>")
             c.append(entry.content);
 
             row.append(c);

@@ -18,25 +18,20 @@ import java.net.URI;
 @DiscriminatorValue("team")
 public class Team extends OrgUnit {
 
-  @OneToMany(mappedBy="team")
-  public List<TeamPlayer> players;
+    @OneToMany(mappedBy = "team")
+    public List<TeamPlayer> players;
 
-  @ManyToMany(mappedBy="teams")
-  public Set<Event> events;
+    public static Model.Finder<Long, Team> find = new Model.Finder(Long.class, Team.class);
 
-  public static Model.Finder<Long, Team> find = new Model.Finder(Long.class, Team.class);
-
-  public static Team findBySlug(Club club, String slug) {
-    return find.where()
-            .eq("parent", club)
-            .eq("slug", slug)
-            .findUnique();
-  }
-
+    public static Team findBySlug(Club club, String slug) {
+        return find.where()
+                .eq("parent", club)
+                .eq("slug", slug)
+                .findUnique();
+    }
 
     @Override
     public String toString() {
         return "Team{" + "id=" + id + ", parent=" + parent + ", name=" + name + ", slug=" + slug + '}';
     }
-
 }

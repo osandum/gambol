@@ -1,4 +1,4 @@
-@(title: String, nav: String = "")(content: Html)
+@(title: String, nav: String = "", scripts: Html = Html(""))(content: Html)
 
 @import be.objectify.deadbolt.java.views.html._
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
@@ -51,7 +51,7 @@
           @subjectPresentOr() {
           	@defining(Application.getLocalUser(session())) { user =>
             <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> @user.name
+              <i class="icon-user icon-white"></i> @user.name
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
@@ -118,5 +118,6 @@
     <script src="@routes.Assets.at("js/bootstrap/bootstrap-typeahead.min.js")"></script>
 
     <script src="@routes.Application.jsRoutes" defer="defer"></script>
+    @scripts
 </body>
 </html>

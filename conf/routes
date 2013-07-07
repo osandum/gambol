@@ -56,6 +56,8 @@ POST    /team                       controllers.ClubController.createClub()
 GET     /team/new                   controllers.TeamController.newTeam()
 POST    /team                       controllers.TeamController.createTeam()
 
+GET     /cal                        controllers.CalDemo.index()
+GET     /events                     controllers.Application.events()
 
 # Home page
 GET     /:club                      controllers.Application.clubIndex(club: String)

@@ -41,11 +41,8 @@ public class Event extends Model {
     public static Finder<Long, Event> find =
             new Finder<Long, Event>(Long.class, Event.class);
 
-    @ManyToMany
-    public Set<Club> clubs;
-
-    @ManyToMany
-    public Set<Team> teams;
+    @ManyToMany(mappedBy = "events")
+    public Set<OrgUnit> parties;
 
     @Override
     public String toString() {

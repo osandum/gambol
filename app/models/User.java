@@ -91,6 +91,15 @@ public class User extends Model implements Subject {
 		return Long.toString(id);
 	}
 
+    public List<Event> myEvents() {
+        Set<Event> all = new HashSet<Event>();
+        for (TeamPlayer tp : teams)
+            all.addAll(tp.team.events);
+
+        List<Event> res = new ArrayList<Event>(all);
+        return res;
+    }
+
 	@Override
 	public List<? extends Role> getRoles() {
 		return roles;
