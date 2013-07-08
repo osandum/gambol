@@ -6,8 +6,7 @@ import static controllers.Application.getLocalUser;
 import static controllers.TeamController.teamForm;
 import java.util.Date;
 import java.util.Map;
-import models.Club;
-import models.Team;
+import models.OrgUnit;
 import models.User;
 import play.Logger;
 import play.api.templates.Html;
@@ -24,7 +23,7 @@ import views.html.club.*;
  */
 public class ClubController extends Controller {
 
-        final static Form<models.Club> clubForm = form(models.Club.class);
+        final static Form<models.OrgUnit> clubForm = form(models.OrgUnit.class);
 
 	@Restrict(@Group(Application.USER_ROLE))
     public static Result newClub() {
@@ -34,12 +33,12 @@ public class ClubController extends Controller {
 
 	@Restrict(@Group(Application.USER_ROLE))
     public static Result createClub() {
-        Form<models.Club> filledForm = clubForm.bindFromRequest();
+        Form<models.OrgUnit> filledForm = clubForm.bindFromRequest();
 
         if (filledForm.hasErrors())
             return badRequest(form.render("Ny klub?!", filledForm));
 
-        Club newClub = filledForm.get();
+        OrgUnit newClub = filledForm.get();
 
         newClub.created = new Date();
 		newClub.createdBy = getLocalUser(session());

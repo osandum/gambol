@@ -2,16 +2,12 @@
 package models;
 
 import java.net.URI;
-import java.util.Date;
-import java.util.Set;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
+import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -22,9 +18,7 @@ import play.db.ebean.Model;
  * @version     $Id: OrgUnit.java -1 20-06-2013 21:49:49 osa $
  */
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "org_unit_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class OrgUnit extends Model {
+public class OrgUnit extends Model {
     @Id
     public Long id;
 
@@ -48,13 +42,33 @@ public abstract class OrgUnit extends Model {
 
     public String path;
 
+    public OrgUnitType orgUnitType;
+
     @ManyToOne
     public User createdBy;
 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date created;
 
+    @OneToMany(mappedBy = "party")
+    public List<TeamPlayer> players;
+
     public static Finder<Long, OrgUnit> find = new Finder(Long.class, OrgUnit.class);
+
+    public static OrgUnit findBySlug(String slug) {
+        return find.where().eq("slug", slug).findUnique();
+    }
+
+    public static OrgUnit findBySlug(OrgUnit parent, String slug) {
+        return find.where().eq("parent", parent).eq("slug", slug).findUnique();
+    }
+
+    public static Map<String, String> allClubsOptions() {
+        Map<String, String> r = new HashMap<String, String>();
+        for (OrgUnit c : find.where().eq("orgUnitType", OrgUnitType.CLUB).findList())
+            r.put(c.slug, c.name);
+        return r;
+    }
 
 
     public void collectEvents(Set<Event> all) {
@@ -71,5 +85,4 @@ public abstract class OrgUnit extends Model {
 
         return getPath(u.parent) + "-" + u.slug;
     }
-
 }

@@ -20,7 +20,7 @@ public class TeamPlayer extends Model {
 
     @ManyToOne
     @Constraints.Required
-    public Team team;
+    public OrgUnit party;
 
     @ManyToOne
     @Constraints.Required

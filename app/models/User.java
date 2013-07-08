@@ -79,9 +79,9 @@ public class User extends Model implements Subject {
 	public static final Finder<Long, User> find = new Finder<Long, User>(
 			Long.class, User.class);
 
-    public Team defaultTeam() {
+    public OrgUnit defaultTeam() {
         for (TeamPlayer tp : teams)
-            return tp.team;
+            return tp.party;
         return null;
     }
 
@@ -94,7 +94,7 @@ public class User extends Model implements Subject {
     public List<Event> myEvents() {
         Set<Event> all = new HashSet<Event>();
         for (TeamPlayer tp : teams)
-            all.addAll(tp.team.events);
+            all.addAll(tp.party.events);
 
         List<Event> res = new ArrayList<Event>(all);
         return res;

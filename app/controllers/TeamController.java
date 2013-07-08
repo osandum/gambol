@@ -1,8 +1,7 @@
 package controllers;
 
 import java.util.Map;
-import models.Club;
-import models.Team;
+import models.OrgUnit;
 import play.api.templates.Html;
 import play.data.Form;
 import play.mvc.Controller;
@@ -16,22 +15,22 @@ import views.html.team.*;
  * @version     $Id: TeamController.java -1 09-06-2013 21:37:57 osa $
  */
 public class TeamController extends Controller {
-    final static Form<models.Team> teamForm = form(models.Team.class);
+    final static Form<models.OrgUnit> teamForm = form(models.OrgUnit.class);
 
     public static Result newTeam() {
-        Map<String, String> clubOpts = Club.allClubsOptions();
+        Map<String, String> clubOpts = OrgUnit.allClubsOptions();
         Html res = form.render("Nyt hold?!", teamForm, views.html.helper.options.apply(clubOpts));
         return ok(res);
     }
 
     public static Result createTeam() {
-        Form<models.Team> filledForm = teamForm.bindFromRequest();
+        Form<models.OrgUnit> filledForm = teamForm.bindFromRequest();
 
         if(filledForm.hasErrors()) {
-            Map<String, String> clubOpts = Club.allClubsOptions();
+            Map<String, String> clubOpts = OrgUnit.allClubsOptions();
             return badRequest(form.render("Nyt hold?!", filledForm, views.html.helper.options.apply(clubOpts)));
         } else {
-            Team newTeam = filledForm.get();
+            OrgUnit newTeam = filledForm.get();
             return ok(summary.render(newTeam));
         }
     }

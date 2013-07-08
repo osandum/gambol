@@ -57,7 +57,7 @@ public class Application extends Controller {
 		final User localUser = getLocalUser(session());
         Set<Event> res = new HashSet<Event>();
         for (TeamPlayer tp : localUser.teams)
-            res.addAll(tp.team.events);
+            res.addAll(tp.party.events);
 
 		return ok(Json.toJson(res.toArray()));
 	}
@@ -110,17 +110,17 @@ public class Application extends Controller {
 	}
 
     public static Result clubIndex(String clubSlug) {
-        Club c = Club.findBySlug(clubSlug);
+        OrgUnit c = OrgUnit.findBySlug(clubSlug);
         if (c == null)
             return notFound(clubSlug);
         return ok(views.html.club.summary.render(c));
     }
 
     public static Result teamIndex(String clubSlug, String teamSlug) {
-        Club c = Club.findBySlug(clubSlug);
+        OrgUnit c = OrgUnit.findBySlug(clubSlug);
         if (c == null)
             return notFound(clubSlug);
-        final Team t = Team.findBySlug(c, teamSlug);
+        final OrgUnit t = OrgUnit.findBySlug(c, teamSlug);
         if (t == null)
             return notFound(teamSlug);
 
@@ -148,7 +148,7 @@ public class Application extends Controller {
 		final User localUser = getLocalUser(session());
 
         for (TeamPlayer tp : localUser.teams)
-            return ok(views.html.team.summary.render(tp.team));
+            return ok(views.html.team.summary.render(tp.party));
 
         return notFound();
     }

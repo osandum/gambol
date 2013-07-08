@@ -4,6 +4,7 @@ import java.util.Date;
 import play.data.validation.Constraints;
 import java.util.*;
 import javax.persistence.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import play.db.ebean.*;
 import play.data.format.*;
@@ -41,6 +42,7 @@ public class Event extends Model {
     public static Finder<Long, Event> find =
             new Finder<Long, Event>(Long.class, Event.class);
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "events")
     public Set<OrgUnit> parties;
 

@@ -1,4 +1,4 @@
-@(message: String, teamForm: Form[Team])
+@(message: String, teamForm: Form[OrgUnit])
 
 @import be.objectify.deadbolt.java.views.html._
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
@@ -15,8 +15,8 @@
         @defining(Application.getLocalUser(session())) { user =>
             @user.teams.map { tp =>
             <dl>
-                <dt><a href="@routes.Application.teamIndex(tp.team.parent.slug, tp.team.slug)">@tp.team.parent.name | @tp.team.name</a></dt>
-                @tp.team.events.map { evt =>
+                <dt><a href="@routes.Application.teamIndex(tp.party.parent.slug, tp.party.slug)">@tp.party.parent.name | @tp.party.name</a></dt>
+                @tp.party.events.map { evt =>
                     <dd>@evt</dd>
                 }
             </dl>
