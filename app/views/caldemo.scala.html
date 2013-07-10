@@ -9,10 +9,22 @@
 
             $('#calendar').fullCalendar({
                 firstDay: 1,
+                allDayDefault: false,
+                ignoreTimezone: false,
+                weekMode: 'variable',
+                weekNumbers: true,
 
                 // KSF U11
-//              events: 'http://www.google.com/calendar/feeds/pnumj9f5ce9774nhjq48so2uo0%40group.calendar.google.com/public/basic',
-                events: '@routes.Application.events()',
+                eventSources: [
+                    {
+                        url: '@routes.Application.events()',
+                        color: '#CC3333'
+                    },
+                    {
+                        url: 'http://www.google.com/calendar/feeds/pnumj9f5ce9774nhjq48so2uo0%40group.calendar.google.com/public/basic',
+                        color: '#AAAAAA'
+                    }
+                ],
 
                 eventClick: function(event) {
                     // opens events in a popup window
@@ -36,7 +48,7 @@
 
                 timeFormat: {
                   agenda: 'HH(:mm){–HH(:mm)}',
-                  '': 'HH(:mm){–HH(:mm) }'
+                      '': 'HH(:mm){–HH(:mm)}:\n'
                  }
             });
 
