@@ -22,7 +22,12 @@ import be.objectify.deadbolt.java.actions.Restrict;
 import com.feth.play.module.pa.PlayAuthenticate;
 import com.feth.play.module.pa.providers.password.UsernamePasswordAuthProvider;
 import com.feth.play.module.pa.user.AuthUser;
+import java.io.IOException;
 import java.util.*;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.map.util.ISO8601DateFormat;
+import static play.mvc.Controller.request;
 
 public class Application extends Controller {
 
@@ -53,14 +58,25 @@ public class Application extends Controller {
 	}
 
 	@Restrict(@Group(Application.USER_ROLE))
-	public static Result events() {
+	public static Result events() throws IOException {
+        long t1 = Long.valueOf(request().getQueryString("start")) * 1000L;
+        long t2 = Long.valueOf(request().getQueryString("end")) * 1000L;
+
+        Logger.info("events from " + new Date(t1) + " to " + new Date(t2));
+
 		final User localUser = getLocalUser(session());
         Set<Event> res = new HashSet<Event>();
         for (TeamPlayer tp : localUser.teams)
-            res.addAll(tp.party.events);
+            res.addAll(Event.forParty(tp.party, new Date(t1), new Date(t2)));
 
-		return ok(Json.toJson(res.toArray()));
-	}
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+        mapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, true);
+        mapper.setDateFormat( new ISO8601DateFormat() );
+ 		return ok(mapper.writeValueAsString(res.toArray())).as("application/json; charset=utf-8");
+
+	//	return ok(Json.toJson(res.toArray()));
+    }
 
 	public static Result login() {
 		return ok(login.render(MyUsernamePasswordAuthProvider.LOGIN_FORM));

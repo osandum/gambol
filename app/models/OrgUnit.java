@@ -85,4 +85,10 @@ public class OrgUnit extends Model {
 
         return getPath(u.parent) + "-" + u.slug;
     }
+
+    @Override
+    public String toString() {
+        return "OrgUnit{" + "id=" + id + ", parent=" + parent + ", name=" + name + ", slug=" + slug + ", path=" + path + ", orgUnitType=" + orgUnitType + '}';
+    }
+
 }

@@ -11,7 +11,8 @@
                 firstDay: 1,
 
                 // KSF U11
-                events: 'http://www.google.com/calendar/feeds/pnumj9f5ce9774nhjq48so2uo0%40group.calendar.google.com/public/basic',
+//              events: 'http://www.google.com/calendar/feeds/pnumj9f5ce9774nhjq48so2uo0%40group.calendar.google.com/public/basic',
+                events: '@routes.Application.events()',
 
                 eventClick: function(event) {
                     // opens events in a popup window
