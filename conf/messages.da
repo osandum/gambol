@@ -153,3 +153,8 @@ playauthenticate.index.details=View details
 playauthenticate.restricted.secrets=Secrets, everywhere!
 
 ### --- play-authenticate END
+
+calendar.monthNames="januar","februar","marts","april","maj","juni","juli", "august", "september", "oktober", "november", "december"
+calendar.monthNamesShort="jan","feb","mar","apr","maj","jun","jul", "aug", "sep", "okt", "nov", "dec"
+calendar.dayNames="søndag","mandag","tirsdag","onsdag","torsdag","fredag","lørdag"
+calendar.dayNamesShort="søn","man","tir","ons","tor","fre","lør"

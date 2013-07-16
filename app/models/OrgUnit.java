@@ -30,6 +30,10 @@ public class OrgUnit extends Model {
 
     public URI rssFeed;
 
+    public String extCalendarId;
+
+    public String eventsColor;
+
     public String calendarId;
 
     @ManyToMany//(mappedBy = "parties")

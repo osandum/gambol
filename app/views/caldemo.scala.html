@@ -14,15 +14,17 @@
                 weekMode: 'variable',
                 weekNumbers: true,
 
-                // KSF U11
                 eventSources: [
+    @defining(Application.getLocalUser(session())) { user =>
+        @user.teams.map { tp => @if(tp.party.extCalendarId) {
+                    {  // @tp.party.name:
+                       url: 'http://www.google.com/calendar/feeds/@(tp.party.extCalendarId)/public/basic',
+                       color: '@(tp.party.eventsColor)'
+                    },
+    }}}
                     {
                         url: '@routes.Application.events()',
                         color: '#CC3333'
-                    },
-                    {
-                        url: 'http://www.google.com/calendar/feeds/pnumj9f5ce9774nhjq48so2uo0%40group.calendar.google.com/public/basic',
-                        color: '#AAAAAA'
                     }
                 ],
 
@@ -40,11 +42,11 @@
                     }
                 },
 
-                monthNames: [ "januar","februar","marts","april","maj","juni","juli", "august", "september", "oktober", "november", "december" ],
-                monthNamesShort: [ "jan","feb","mar","apr","maj","jun","jul", "aug", "sep", "okt", "nov", "dec" ],
+                monthNames: [ @Html(Messages("calendar.monthNames")) ],
+                monthNamesShort: [ @Html(Messages("calendar.monthNamesShort")) ],
 
-                dayNames: [ 'søndag', 'mandag', 'tirsdag', 'onsdag', 'torsdag', 'fredag', 'lørdag'],
-                dayNamesShort: [ 'søn', 'man', 'tir', 'ons', 'tor', 'fre', 'lør' ],
+                dayNames: [ @Html(Messages("calendar.dayNames")) ],
+                dayNamesShort: [ @Html(Messages("calendar.dayNamesShort")) ],
 
                 timeFormat: {
                   agenda: 'HH(:mm){–HH(:mm)}',
