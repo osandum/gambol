@@ -1,6 +1,7 @@
 
 package models;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
 import java.net.URI;
 import java.util.*;
 import javax.persistence.Entity;
@@ -51,6 +52,7 @@ public class OrgUnit extends Model {
     @ManyToOne
     public User createdBy;
 
+    @CreatedTimestamp
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date created;
 

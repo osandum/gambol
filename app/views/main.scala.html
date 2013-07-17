@@ -1,4 +1,4 @@
-@(title: String, nav: String = "", scripts: Html = Html(""))(content: Html)
+@(title: String = "Gambol", nav: String = "", scripts: Html = Html(""))(content: Html)
 
 @import be.objectify.deadbolt.java.views.html._
 @import be.objectify.deadbolt.core.utils.TemplateUtils._
@@ -45,7 +45,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="@routes.Application.index()">Gambol</a>
+            <a class="brand" href="@routes.Application.index()">@title</a>
 
           <div class="btn-group pull-right">
           @subjectPresentOr() {

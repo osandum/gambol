@@ -104,10 +104,11 @@ public class Global extends GlobalSettings {
 
             Ebean.save(all.get("securityRoles"));
 
+            Ebean.save(all.get("users"));
+
             Ebean.save(all.get("clubs"));
             Ebean.save(all.get("teams"));
 
-            Ebean.save(all.get("users"));
             Ebean.save(all.get("players"));
 
             Ebean.save(all.get("events"));

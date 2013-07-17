@@ -6,26 +6,89 @@
 @import helper._
 @import helper.twitterBootstrap._
 
-@import play.i18n._
+@scripts = {
+    <script src="@routes.Assets.at("vendor/fullcalendar-1.6.1/fullcalendar.js")"></script>
+    <script src="@routes.Assets.at("vendor/fullcalendar-1.6.1/gcal.js")"></script>
 
-@main("Welcome to Gambol") {
+    <script>
+
+        $(document).ready(function() {
+
+            $('#todayAgenda').fullCalendar({
+                defaultView: 'agendaDay',
+                header: false,
+                allDaySlot: false,
+                firstHour: 13,
+                height: 450,
+                firstDay: 1,
+                allDayDefault: false,
+                ignoreTimezone: false,
+                weekMode: 'variable',
+
+                eventSources: [
+    @defining(Application.getLocalUser(session())) { user =>
+        @user.teams.map { tp => @if(tp.party.extCalendarId) {
+                    {  // @tp.party.name:
+                       url: 'http://www.google.com/calendar/feeds/@(tp.party.extCalendarId)/public/basic',
+                       color: '@(tp.party.eventsColor)'
+                    },
+    }}}
+                    {
+                        url: '@routes.Application.events()',
+                        color: '#CC3333'
+                    }
+                ],
+
+                monthNames: [ @Html(Messages("calendar.monthNames")) ],
+                monthNamesShort: [ @Html(Messages("calendar.monthNamesShort")) ],
+
+                dayNames: [ @Html(Messages("calendar.dayNames")) ],
+                dayNamesShort: [ @Html(Messages("calendar.dayNamesShort")) ],
+
+                timeFormat: {
+                  agenda: 'HH(:mm){–HH(:mm)}',
+                      '': 'HH(:mm){–HH(:mm)}:\n'
+                   },
+                axisFormat: 'HH(:mm)'
+            });
+
+        });
+
+    </script>
+
+}
+
+@main("Welcome to Gambol", scripts = scripts) {
 
     @subjectPresentOr() {
-      <div class="hero-unit">
-        @defining(Application.getLocalUser(session())) { user =>
-            @user.teams.map { tp =>
-            <dl>
-                <dt><a href="@routes.Application.teamIndex(tp.party.parent.slug, tp.party.slug)">@tp.party.parent.name | @tp.party.name</a></dt>
-                @tp.party.events.map { evt =>
-                    <dd>@evt</dd>
-                }
-            </dl>
-            }
 
-            @user.myEvents.map { evt =>
-                <p>@evt</p>
-            }
-        }
+
+      <div class="row-fluid">
+        <div class="span4">
+            <h1>I dag <small>det sker</small></h1>
+            <link media="screen" href="@routes.Assets.at("vendor/fullcalendar-1.6.1/fullcalendar.css")" rel="stylesheet" />
+            <link media="print" href="@routes.Assets.at("vendor/fullcalendar-1.6.1/fullcalendar.print.css")" rel="stylesheet" />
+            <div id="todayAgenda"></div>
+         <!--Sidebar content-->
+        </div>
+       <div class="span8">
+        <div class="hero-unit">
+          @defining(Application.getLocalUser(session())) { user =>
+              @user.teams.map { tp =>
+              <dl>
+                  <dt><a href="@routes.Application.teamIndex(tp.party.parent.slug, tp.party.slug)">@tp.party.parent.name | @tp.party.name</a></dt>
+                  @tp.party.events.map { evt =>
+                      <dd>@evt</dd>
+                  }
+              </dl>
+              }
+
+              @user.myEvents.map { evt =>
+                  <p>@evt</p>
+              }
+          }
+        </div>
+       </div>
       </div>
     }{
       <div class="hero-unit">
@@ -120,7 +183,7 @@
         <div class="span4">
             <h2>Opret dit hold</h2>
             <p>Opret dit hold og inviter dine holdkammerater med det samme.</p>
-            <p><a class="btn btn-large btn-primary" href="@routes.ClubController.newClub"><i class="icon-plus-sign icon-white"></i>@Messages.get("gambol.club.new")</a></p>
+            <p><a class="btn btn-large btn-primary" href="@routes.ClubController.newClub"><i class="icon-plus-sign icon-white"></i>@Messages("gambol.club.new")</a></p>
         </div>
     </div>
 }
