@@ -15,7 +15,7 @@ format.real=Real
 
 # --- Errors
 error.invalid=Invalid value
-error.required=This field is required
+error.required=Feltet skal udfyldes
 error.number=Numeric value expected
 error.real=Real number value expected
 error.min=Must be greater or equal to {0}
@@ -116,6 +116,7 @@ gambol.navigation.team=Mit hold
 gambol.created.summary=Oprettet {0} af {1}
 
 gambol.club.new=Ny klub
+gambol.club.member.new=Nyt medlem
 
 # play-authenticate: Navigation
 playauthenticate.navigation.profile=Profile

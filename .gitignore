@@ -16,3 +16,4 @@ dist
 /nbproject/private/
 mem.h2.db
 
+/build/

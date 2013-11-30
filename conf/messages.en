@@ -116,6 +116,7 @@ gambol.navigation.team=My Team
 gambol.created.summary=Created {0,date,short} by {1}
 
 gambol.club.new=New Club
+gambol.club.member.new=New Member
 
 # play-authenticate: Navigation
 playauthenticate.navigation.profile=Profile

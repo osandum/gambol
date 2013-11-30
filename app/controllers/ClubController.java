@@ -50,4 +50,15 @@ public class ClubController extends Controller {
         return ok(summary.render(newClub));
     }
 
+    public static Result newMember(String clubSlug) {
+        Html res = form.render("Ny klub?!", clubForm);
+        return ok(res);
+    }
+
+    public static Result createMember(String clubSlug) {
+        Html res = form.render("Ny klub?!", clubForm);
+        return ok(res);
+    }
+
+
 }

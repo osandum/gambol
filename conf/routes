@@ -51,7 +51,9 @@ POST    /login/password/forgot      controllers.Signup.doForgotPassword
 GET     /teams                      controllers.Application.teamSearch()
 
 GET     /club/new                   controllers.ClubController.newClub()
-POST    /team                       controllers.ClubController.createClub()
+POST    /club                       controllers.ClubController.createClub()
+GET     /:club/member/new           controllers.ClubController.newMember(club: String)
+POST    /:club/member               controllers.ClubController.createMember(club: String)
 
 GET     /team/new                   controllers.TeamController.newTeam()
 POST    /team                       controllers.TeamController.createTeam()

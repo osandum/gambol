@@ -1,11 +1,9 @@
 @(club: models.OrgUnit)
 
 @main(club.name) {
-    <div class="row">
+    <div class="row-fluid">
         <div class="span8">
-
-        <h1>@club.name</h1>
-
+          <h1>@club.name</h1>
         </div>
 
         <div class="span4">
@@ -13,8 +11,12 @@
             @club.createdBy
             @Messages("gambol.created.summary", club.created, club.createdBy.name)
         </small>
+        </div>
 
-
+        <div class="span4">
+            <h2>Inviter medlemmer</h2>
+            <p>Inviter klubmedlemmer af @club.name til at registrere sig.</p>
+            <p><a class="btn btn-large btn-primary" href="@routes.ClubController.newMember(club.slug)"><i class="icon-plus-sign icon-white"></i> @Messages("gambol.club.member.new")</a></p>
         </div>
 
     </div>
